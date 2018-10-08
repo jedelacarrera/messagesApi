@@ -2,20 +2,20 @@
 
 ## Modify content
 
-Clone this respository
+- Clone this respository
 ``` 
 git clone https://github.com/jedelacarrera/messagesApi.git
 cd messagesApi
 ```
 
-Create a file called .env
+- Create a file called .env
 ``` 
 touch .env
 ```
 
-Create a postgres database
-Copy the information in .env_template and paste it in .env
-Replace credentials with your own.
+- Create a postgres database
+- Copy the information in .env_template and paste it in .env
+- Replace credentials with your own.
 
 
 ## Models
