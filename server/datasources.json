@@ -1,0 +1,16 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "postgres": {
+    "host": "${process.env.PG_HOST}",
+    "port": 5432,
+    "url": "postgres://postgres:delacarrera@localhost/arquitectura_api",
+    "database": "${process.env.PG_DB}",
+    "password": "${process.env.PG_PW}",
+    "name": "postgres",
+    "user": "${process.env.PG_USER}",
+    "connector": "postgresql"
+  }
+}
