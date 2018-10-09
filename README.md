@@ -16,7 +16,14 @@ touch .env
 - Create a postgres database
 - Copy the information in .env_template and paste it in .env
 - Replace credentials with your own.
-
+- Install dependencies
+``` 
+npm install
+```
+- Run
+``` 
+node .
+```
 
 ## Models
 
