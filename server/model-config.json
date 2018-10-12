@@ -55,5 +55,9 @@
   "subscription": {
     "dataSource": "postgres",
     "public": true
+  },
+  "hashtag": {
+    "dataSource": "postgres",
+    "public": true
   }
 }
