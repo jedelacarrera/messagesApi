@@ -4,8 +4,14 @@
     "connector": "memory"
   },
   "postgres": {
+    "host": "localhost",
     "port": 5432,
+    "url": "postgres://florencia:florencia@localhost:5432/messagesApi?ssl=false",
+    "database": "messagesApi",
+    "password": "ACOFB8567",
     "name": "postgres",
-    "connector": "postgresql"
+    "connector": "postgresql",
+    "user": "florencia",
+    "ssl": false
   }
 }

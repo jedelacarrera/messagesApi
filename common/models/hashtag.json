@@ -8,7 +8,13 @@
   },
   "properties": {},
   "validations": [],
-  "relations": {},
+  "relations": {
+    "service": {
+      "type": "belongsTo",
+      "model": "service",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }

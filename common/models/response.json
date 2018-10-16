@@ -25,6 +25,12 @@
       "model": "message",
       "foreignKey": "",
       "primaryKey": "id"
+    },
+    "service": {
+      "type": "belongsTo",
+      "model": "service",
+      "foreignKey": "",
+      "primaryKey": "id"
     }
   },
   "acls": [

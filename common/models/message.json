@@ -27,6 +27,14 @@
     "responses": {
       "type": "hasMany",
       "model": "response",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "service": {
+      "type": "belongsTo",
+      "model": "service",
       "foreignKey": ""
     }
   },

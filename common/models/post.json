@@ -31,6 +31,11 @@
       "type": "hasMany",
       "model": "subscription",
       "foreignKey": ""
+    },
+    "service": {
+      "type": "belongsTo",
+      "model": "service",
+      "foreignKey": ""
     }
   },
   "acls": [

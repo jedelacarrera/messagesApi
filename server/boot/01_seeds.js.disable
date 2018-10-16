@@ -5,38 +5,29 @@ module.exports = async function(app) {
   var responseModel = app.models.Response;
   var subscriptionModel = app.models.Subscription;
 
+  var roleModel = app.models.Role;
+  var roleMappingModel = app.models.RoleMapping;
+
+
+  var roles = createRoles(function(err) {
+    if (err) throw err;
+    console.log('> roles created sucessfully');
+  });
+
+  await roles
+  .then(function(res) {
+    return res;
+  }).catch(err => { throw err; });
+
   try {
     var people = await personModel.create([
       {
         'email': 'aaa@gmail.com',
         'username': 'aaa',
         'password': '1234',
-        'emailVerified': true
-      },
-      {
-        'email': 'bbb@gmail.com',
-        'username': 'bbb',
-        'password': '1234',
-        'emailVerified': true
-      },
-      {
-        'email': 'ccc@gmail.com',
-        'username': 'ccc',
-        'password': '1234',
-        'emailVerified': true
-      },
-      {
-        'email': 'ddd@gmail.com',
-        'username': 'ddd',
-        'password': '1234',
-        'emailVerified': true
-      },
-      {
-        'email': 'eee@gmail.com',
-        'username': 'eee',
-        'password': '1234',
-        'emailVerified': true
-      },
+        'emailVerified': true,
+        'accountType': 'A'
+      }
     ]);
 
     var posts = await postModel.create([
@@ -111,7 +102,7 @@ module.exports = async function(app) {
         "messageId": 3,
         "personId": 3
       }
-    ]);    
+    ]);
 
     var subscriptions = await subscriptionModel.create([
       {
@@ -144,5 +135,18 @@ module.exports = async function(app) {
     console.log(err);
   }
 
+  async function createRoles(err) {
+      var roles = await roleModel.create([{
+        name: 'A',
+      },
+      {
+        name: 'S',
+      },
+      {
+        name: 'U',
+      }]);
+      console.log('Roles created');
+      return roles;
+    }
 
 };
