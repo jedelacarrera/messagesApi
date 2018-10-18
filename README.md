@@ -46,10 +46,12 @@ node .
 - get posts: GET /api/posts
 - get post messages: GET /api/posts/{id}/messages
 - get post subscriptions: GET /api/posts/{id}/subscriptions
+- get post with include a hashtag (or any string) in the title or description: GET /api/posts/filter/{hashtag}
 
 ### Message
 - get messages: GET /api/messages
 - get responses of a message: GET /api/messages/{id}/responses
+- get messages with include a hashtag (or any string): GET /api/messages/filter/{hashtag}
 
 ### Response
 - get responses: GET /api/responses
