@@ -6,7 +6,13 @@
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "accountType": {
+      "type": "string",
+      "required": true,
+      "default": "U"
+    }
+  },
   "validations": [],
   "relations": {
     "messages": {
@@ -28,9 +34,20 @@
       "type": "hasMany",
       "model": "subscription",
       "foreignKey": ""
+    },
+    "service": {
+      "type": "belongsTo",
+      "model": "service",
+      "foreignKey": ""
     }
   },
   "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "A",
+      "permission": "ALLOW"
+    },
     {
       "accessType": "READ",
       "principalType": "ROLE",

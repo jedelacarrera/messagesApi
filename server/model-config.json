@@ -56,7 +56,7 @@
     "dataSource": "postgres",
     "public": true
   },
-  "hashtag": {
+  "service": {
     "dataSource": "postgres",
     "public": true
   }
