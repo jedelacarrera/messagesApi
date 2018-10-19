@@ -28,107 +28,107 @@ module.exports = async function(app) {
       },
     ]);
 
-    // var posts = await postModel.create([
-    //   {
-    //     "title": "post 1",
-    //     "description": "first post",
-    //     "personId": 1
-    //   },
-    //   {
-    //     "title": "post 2",
-    //     "description": "second post",
-    //     "personId": 2
-    //   },
-    //   {
-    //     "title": "post 3",
-    //     "description": "third post",
-    //     "personId": 2
-    //   },
-    //   {
-    //     "title": "post 3",
-    //     "description": "third post",
-    //     "personId": 3
-    //   }
-    // ]);
-    //
-    // var messages = await messageModel.create([
-    //   {
-    //     "description": "first message",
-    //     "postId": 1,
-    //     "personId": 1
-    //   },
-    //   {
-    //     "description": "second message",
-    //     "postId": 2,
-    //     "personId": 1
-    //   },
-    //   {
-    //     "description": "third message",
-    //     "postId": 3,
-    //     "personId": 2
-    //   },
-    //   {
-    //     "description": "fourth message",
-    //     "postId": 3,
-    //     "personId": 3
-    //   },
-    // ]);
-    //
-    // var responses = await responseModel.create([
-    //   {
-    //     "description": "first response",
-    //     "messageId": 1,
-    //     "personId": 1
-    //   },
-    //   {
-    //     "description": "second response",
-    //     "messageId": 1,
-    //     "personId": 1
-    //   },
-    //   {
-    //     "description": "third response",
-    //     "messageId": 2,
-    //     "personId": 2
-    //   },
-    //   {
-    //     "description": "fourth response",
-    //     "messageId": 3,
-    //     "personId": 1
-    //   },
-    //   {
-    //     "description": "fifth response",
-    //     "messageId": 3,
-    //     "personId": 3
-    //   }
-    // ]);
-    //
-    // var subscriptions = await subscriptionModel.create([
-    //   {
-    //     "notification": false,
-    //     "personId": 1,
-    //     "postId": 1
-    //   },
-    //   {
-    //     "notification": true,
-    //     "personId": 2,
-    //     "postId": 1
-    //   },
-    //   {
-    //     "notification": false,
-    //     "personId": 1,
-    //     "postId": 3
-    //   },
-    //   {
-    //     "notification": false,
-    //     "personId": 3,
-    //     "postId": 1
-    //   },
-    //   {
-    //     "notification": false,
-    //     "personId": 2,
-    //     "postId": 2
-    //   },
-  //   ]);
+     var posts = await postModel.create([
+       {
+         "title": "post 1",
+         "description": "first post",
+         "personId": 1
+       },
+       {
+         "title": "post 2",
+         "description": "second post",
+         "personId": 2
+       },
+       {
+         "title": "post 3",
+         "description": "third post",
+         "personId": 2
+       },
+       {
+         "title": "post 3",
+         "description": "third post",
+         "personId": 3
+       }
+     ]);
+    
+     var messages = await messageModel.create([
+       {
+         "description": "first message",
+         "postId": 1,
+         "personId": 1
+       },
+       {
+         "description": "second message",
+         "postId": 2,
+         "personId": 1
+       },
+       {
+         "description": "third message",
+         "postId": 3,
+         "personId": 2
+       },
+       {
+         "description": "fourth message",
+         "postId": 3,
+         "personId": 3
+       },
+     ]);
+    
+     var responses = await responseModel.create([
+       {
+         "description": "first response",
+         "messageId": 1,
+         "personId": 1
+       },
+       {
+         "description": "second response",
+         "messageId": 1,
+         "personId": 1
+       },
+       {
+         "description": "third response",
+         "messageId": 2,
+         "personId": 2
+       },
+       {
+         "description": "fourth response",
+         "messageId": 3,
+         "personId": 1
+       },
+       {
+         "description": "fifth response",
+         "messageId": 3,
+         "personId": 3
+       }
+     ]);
+    
+     var subscriptions = await subscriptionModel.create([
+       {
+         "notification": false,
+         "personId": 1,
+         "postId": 1
+       },
+       {
+         "notification": true,
+         "personId": 2,
+         "postId": 1
+       },
+       {
+         "notification": false,
+         "personId": 1,
+         "postId": 3
+       },
+       {
+         "notification": false,
+         "personId": 3,
+         "postId": 1
+       },
+       {
+         "notification": false,
+         "personId": 2,
+         "postId": 2
+       },
+     ]);
   } catch (err) {
     console.log(err);
   }
