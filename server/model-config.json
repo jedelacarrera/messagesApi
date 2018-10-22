@@ -38,15 +38,15 @@
   },
   "post": {
     "dataSource": "postgres",
-    "public": true
+    "public": false
   },
   "message": {
     "dataSource": "postgres",
-    "public": true
+    "public": false
   },
   "response": {
     "dataSource": "postgres",
-    "public": true
+    "public": false
   },
   "person": {
     "dataSource": "postgres",
@@ -54,7 +54,7 @@
   },
   "subscription": {
     "dataSource": "postgres",
-    "public": true
+    "public": false
   },
   "service": {
     "dataSource": "postgres",

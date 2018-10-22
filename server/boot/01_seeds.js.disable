@@ -50,7 +50,7 @@ module.exports = async function(app) {
          "personId": 3
        }
      ]);
-    
+
      var messages = await messageModel.create([
        {
          "description": "first message",
@@ -73,7 +73,7 @@ module.exports = async function(app) {
          "personId": 3
        },
      ]);
-    
+
      var responses = await responseModel.create([
        {
          "description": "first response",
@@ -101,7 +101,7 @@ module.exports = async function(app) {
          "personId": 3
        }
      ]);
-    
+
      var subscriptions = await subscriptionModel.create([
        {
          "notification": false,
