@@ -23,6 +23,11 @@
       "type": "hasMany",
       "model": "post",
       "foreignKey": ""
+    },
+    "subscriptions": {
+      "type": "hasMany",
+      "model": "subscription",
+      "foreignKey": ""
     }
   },
   "acls": [

@@ -22,7 +22,6 @@ module.exports = function(Person) {
   Person.disableRemoteMethodByName('updateAll');
   Person.disableRemoteMethodByName('upsertWithWhere');
   Person.disableRemoteMethodByName('createChangeStream');
-  Person.disableRemoteMethodByName('createChangeStream');
   Person.disableRemoteMethodByName('confirm');
   Person.disableRemoteMethodByName('prototype.__get__messages');
   Person.disableRemoteMethodByName('prototype.__create__messages');
@@ -52,6 +51,16 @@ module.exports = function(Person) {
   Person.disableRemoteMethodByName('prototype.__updateById__subscriptions');
   Person.disableRemoteMethodByName('prototype.__destroyById__subscriptions');
   Person.disableRemoteMethodByName('prototype.__count__subscriptions');
+  Person.disableRemoteMethodByName('prototype.__get__subscribed_posts');
+  Person.disableRemoteMethodByName('prototype.__create__subscribed_posts');
+  Person.disableRemoteMethodByName('prototype.__delete__subscribed_posts');
+  Person.disableRemoteMethodByName('prototype.__findById__subscribed_posts');
+  Person.disableRemoteMethodByName('prototype.__updateById__subscribed_posts');
+  Person.disableRemoteMethodByName('prototype.__destroyById__subscribed_posts');
+  Person.disableRemoteMethodByName('prototype.__count__subscribed_posts');
+  Person.disableRemoteMethodByName('prototype.__exists__subscribed_posts');
+  Person.disableRemoteMethodByName('prototype.__link__subscribed_posts');
+  Person.disableRemoteMethodByName('prototype.__unlink__subscribed_posts');
 
   // role assingment
   Person.observe('after save', function(context, next) {

@@ -9,7 +9,6 @@
   "properties": {
     "notification": {
       "type": "boolean",
-      "required": true,
       "default": false
     }
   },
@@ -18,14 +17,17 @@
     "person": {
       "type": "belongsTo",
       "model": "person",
-      "foreignKey": "",
-      "primaryKey": "id"
+      "foreignKey": "personId"
     },
     "post": {
       "type": "belongsTo",
       "model": "post",
-      "foreignKey": "",
-      "primaryKey": "id"
+      "foreignKey": "postId"
+    },
+    "service": {
+      "type": "belongsTo",
+      "model": "service",
+      "foreignKey": ""
     }
   },
   "acls": [

@@ -25,6 +25,12 @@
       "model": "post",
       "foreignKey": ""
     },
+    "subscribed_posts": {
+      "type": "hasMany",
+      "model": "post",
+      "foreignKey": "personId",
+      "through": "subscription"
+    },
     "responses": {
       "type": "hasMany",
       "model": "response",

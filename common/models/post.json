@@ -27,10 +27,11 @@
       "model": "message",
       "foreignKey": ""
     },
-    "subscriptions": {
+    "people": {
       "type": "hasMany",
-      "model": "subscription",
-      "foreignKey": ""
+      "model": "person",
+      "foreignKey": "postId",
+      "through": "subscription"
     },
     "service": {
       "type": "belongsTo",
