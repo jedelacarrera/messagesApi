@@ -17,7 +17,6 @@ module.exports = function(Service) {
   Service.disableRemoteMethodByName('prototype.__delete__subscriptions');
   Service.disableRemoteMethodByName('prototype.__updateById__subscriptions');
 
-
   // Custom methods: Handlers
   Service.userSubscriptions = function(id, fk, cb) {
     Service.findById(id, function(err, serv) {
@@ -26,9 +25,9 @@ module.exports = function(Service) {
         if (err) return cb(err);
         person.subscribedPosts({}, function(err, posts) {
           if (err) return cb(err);
-          serv.subscriptions({where: {personId: fk}}, function(err, subs) {
+          serv.subscriptions({where: {personId: fk}}, function(err, notifications) {
             if (err) return cb(err);
-            cb(null, {posts, subs});
+            cb(null, {posts, notifications});
           });
         });
       });
@@ -45,7 +44,7 @@ module.exports = function(Service) {
           sub.save();
           cb(null, sub);
         } catch (err) {
-          cb(null, err);
+          cb(err);
         }
       });
     });
@@ -57,10 +56,50 @@ module.exports = function(Service) {
         if (err) return cb(err);
         post.subscribedPeople({}, function(err, people) {
           if (err) return cb(err);
-          serv.subscriptions({where: {postId: fk}}, function(err, subs) {
+          serv.subscriptions({where: {postId: fk}}, function(err, notifications) {
             if (err) return cb(err);
-            cb(null, {people, subs});
+            cb(null, {people, notifications});
           });
+        });
+      });
+    });
+  }
+  Service.getMessages = function(id, fk, cb) {
+    Service.findById(id, function(err, serv) {
+      if (err) return cb(err);
+      serv.posts.findById(fk, function(err, post) {
+        if (err) return cb(err);
+        post.messages({}, function(err, msgs) {
+          if (err) return cb(err);
+          cb(null, msgs)
+        });
+      });
+    });
+  }
+  Service.newMessage = function(id, fkpost, fkauthor, data, cb) {
+    Service.findById(id, function(err, serv) {
+      if (err) return cb(err);
+      serv.posts.findById(fkpost, function(err, post) {
+        if (err) return cb(err);
+        const msg = post.messages.build(data);
+        try {
+          msg.personId = fkauthor;
+          msg.save();
+          cb(null, msg);
+        } catch (err) {
+          cb(err);
+        }
+      });
+    });
+  }
+  Service.getSingleMessage = function(id, fkpost, fkmessage, cb) {
+    Service.findById(id, function(err, serv) {
+      if (err) return cb(err);
+      serv.posts.findById(fkpost, function(err, post) {
+        if (err) return cb(err);
+        post.messages.findById(fkmessage, function(err, msg) {
+          if (err) return cb(err);
+          cb(null, msg);
         });
       });
     });
@@ -105,6 +144,51 @@ module.exports = function(Service) {
     description: "List all users who have subscribed to the post",
     http: {
       path: "/:id/posts/:fk/subscriptions",
+      verb: "get",
+      status: 200,
+      errorStatus: 400
+    }
+  });
+  Service.remoteMethod('getMessages', {
+    accepts: [
+      {arg: "id", type: "string", root: true, required: true, description: "service id", http: {source: "path"}},
+      {arg: "fk", type: "string", root: true, required: true, description: "Foreign key for post", http: {source: "path"}}
+    ],
+    returns: {type: "object", root: true},
+    description: "List all existing messages from a post",
+    http: {
+      path: "/:id/posts/:fk/messages",
+      verb: "get",
+      status: 200,
+      errorStatus: 400
+    }
+  });
+  Service.remoteMethod('newMessage', {
+    accepts: [
+      {arg: "id", type: "string", root: true, required: true, description: "service id", http: {source: "path"}},
+      {arg: "fkpost", type: "string", root: true, required: true, description: "Foreign key for post", http: {source: "path"}},
+      {arg: "fkauthor", type: "string", root: true, required: true, description: "Foreign key for author", http: {source: "path"}},
+      {arg: "data", type: "object", http: {source: "body"}}
+    ],
+    returns: {type: "object", root: true},
+    description: "Allows you to create a new message",
+    http: {
+      path: "/:id/posts/:fkpost/messages/author/:fkauthor",
+      verb: "post",
+      status: 201,
+      errorStatus: 400
+    }
+  });
+  Service.remoteMethod('getSingleMessage', {
+    accepts: [
+      {arg: "id", type: "string", root: true, required: true, description: "service id", http: {source: "path"}},
+      {arg: "fkpost", type: "string", root: true, required: true, description: "Foreign key for post", http: {source: "path"}},
+      {arg: "fkmessage", type: "string", root: true, required: true, description: "Foreign key for message", http: {source: "path"}}
+    ],
+    returns: {type: "object", root: true},
+    description: "Shows a message information",
+    http: {
+      path: "/:id/posts/:fkpost/messages/:fkmessage",
       verb: "get",
       status: 200,
       errorStatus: 400
