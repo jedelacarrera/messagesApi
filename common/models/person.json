@@ -25,7 +25,7 @@
       "model": "post",
       "foreignKey": ""
     },
-    "subscribed_posts": {
+    "subscribedPosts": {
       "type": "hasMany",
       "model": "post",
       "foreignKey": "personId",

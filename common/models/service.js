@@ -20,10 +20,14 @@ module.exports = function(Service) {
   // Custom methods: Handlers
   Service.userSubscriptions = function(id, fk, cb) {
     Service.findById(id, function(err, serv) {
+      if (err) return cb(err);
       serv.people.findById(fk, function(err, person) {
-        person.subscribed_posts({}, function(err, posts) {
-          person.subscriptions({}, function(err, subs) {
-            cb(null, posts, subs);
+        if (err) return cb(err);
+        person.subscribedPosts({}, function(err, posts) {
+          if (err) return cb(err);
+          serv.subscriptions({where: {personId: fk}}, function(err, subs) {
+            if (err) return cb(err);
+            cb(null, {posts, subs});
           });
         });
       });
@@ -31,7 +35,9 @@ module.exports = function(Service) {
   }
   Service.newSubscription = function(id, fkperson, fkpost, cb) {
     Service.findById(id, function(err, serv) {
+      if (err) return cb(err);
       serv.people.findById(fkperson, function(err, person) {
+        if (err) return cb(err);
         const sub = person.subscriptions.build();
         try {
           sub.postId = fkpost;
@@ -43,6 +49,21 @@ module.exports = function(Service) {
       });
     });
   }
+  Service.postSubscriptions = function(id, fk, cb) {
+    Service.findById(id, function(err, serv) {
+      if (err) return cb(err);
+      serv.posts.findById(fk, function(err, post) {
+        if (err) return cb(err);
+        post.subscribedPeople({}, function(err, people) {
+          if (err) return cb(err);
+          serv.subscriptions({where: {postId: fk}}, function(err, subs) {
+            if (err) return cb(err);
+            cb(null, {people, subs});
+          });
+        });
+      });
+    });
+  }
 
   // Custom methods: Register
   Service.remoteMethod('userSubscriptions', {
@@ -50,10 +71,7 @@ module.exports = function(Service) {
       {arg: "id", type: "string", root: true, required: true, description: "service id", http: {source: "path"}},
       {arg: "fk", type: "string", root: true, required: true, description: "Foreign key for people", http: {source: "path"}}
     ],
-    returns: [
-      {arg: "posts", type: "array"},
-      {arg: "notifications", type: "array"}
-    ],
+    returns: {type: "object", root: true},
     description: "List all publications in which the user is subscribed",
     http: {
       path: "/:id/people/:fk/subscriptions",
@@ -74,6 +92,20 @@ module.exports = function(Service) {
       path: "/:id/people/:fkperson/subscriptions/posts/:fkpost",
       verb: "post",
       status: 201,
+      errorStatus: 400
+    }
+  });
+  Service.remoteMethod('postSubscriptions', {
+    accepts: [
+      {arg: "id", type: "string", root: true, required: true, description: "service id", http: {source: "path"}},
+      {arg: "fk", type: "string", root: true, required: true, description: "Foreign key for post", http: {source: "path"}}
+    ],
+    returns: {type: "object", root: true},
+    description: "List all users who have subscribed to the post",
+    http: {
+      path: "/:id/posts/:fk/subscriptions",
+      verb: "get",
+      status: 200,
       errorStatus: 400
     }
   });

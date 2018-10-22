@@ -37,6 +37,12 @@
       "type": "belongsTo",
       "model": "service",
       "foreignKey": ""
+    },
+    "subscribedPeople": {
+      "type": "hasMany",
+      "model": "person",
+      "foreignKey": "postId",
+      "through": "subscription"
     }
   },
   "acls": [
