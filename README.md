@@ -3,13 +3,13 @@
 ## Modify content
 
 - Clone this respository
-``` 
+```
 git clone https://github.com/jedelacarrera/messagesApi.git
 cd messagesApi
 ```
 
 - Create a file called .env
-``` 
+```
 touch .env
 ```
 
@@ -17,11 +17,11 @@ touch .env
 - Copy the information in .env_template and paste it in .env
 - Replace credentials with your own.
 - Install dependencies
-``` 
+```
 npm install
 ```
 - Run
-``` 
+```
 node .
 ```
 
@@ -32,27 +32,27 @@ node .
 - login: POST /api/people/login
 - logout: POST /api/people/logout
 - change-password: POST /api/people/change-password
-- get posts of a person: GET /api/people/{id}/posts
-- create post: POST /api/people/{id}/posts
-- get messages of a person: GET /api/people/{id}/messages
-- create a message: POST /api/people/{id}/messages
-- get responses of a person: GET /api/people/{id}/responses
-- create a response: POST /api/people/{id}/responses
-- get subscriptions of a person: GET /api/people/{id}/subscriptions
-- create a subscription: POST /api/people/{id}/subscriptions
-- delete a subscription: DELETE /api/people/{personId}/subscriptions/{subscriptionId}
 
-### Post
-- get posts: GET /api/posts
-- get post messages: GET /api/posts/{id}/messages
-- get post subscriptions: GET /api/posts/{id}/subscriptions
+### Service
+- get users: GET /services/{id}/people
+- create a new user: POST /services/{id}/people
+- get single user: GET /services/{id}/people/{userId}
+- update user: PUT /services/{id}/people/{userId}
+- delete user: DELETE /services/{id}/people/{userId}
+- get posts subscribed by user: GET /services/{id}/people/{userId}/subscriptions
+- subscribe an user for a post: POST /services/{id}/people/{userId}/subscriptions/posts/{postId}
 
-### Message
-- get messages: GET /api/messages
-- get responses of a message: GET /api/messages/{id}/responses
+- get posts: GET /services/{id}/posts
+- create a new post: POST /services/{id}/posts/author/{authorId}
+- get a single post: GET /services/{id}/posts/{postId}
+- update post: PUT /services/{id}/posts/{postId}
+- delete post: DELETE /services/{id}/posts/{postId}
+- get users subscribed to post: GET /services/{id}/posts/{postId}/subscriptions
 
-### Response
-- get responses: GET /api/responses
+- get messages from a post: GET /services/{id}/posts/{postId}/messages
+- create a new message: POST /services/{id}/posts/{postId}/messages/author/{messageId}
+- get a single message: GET /services/{id}/posts/{postId}/messages/{messageId}
 
-### Subscription
-- get subscriptions: GET /api/subscriptions
+- get response for a message: GET /services/{id}/posts/{postId}/messages/{messageId}/responses
+- create a new response: POST /services/{id}/posts/{postId}/messages/{messageId}/responses/author/{responseId}
+- get a single response: GET /services/{id}/posts/{postId}/messages/{messageId}/responses/{responseId}
