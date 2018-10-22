@@ -13,6 +13,7 @@ module.exports = function(Service) {
   Service.disableRemoteMethodByName('createChangeStream');
   Service.disableRemoteMethodByName('prototype.__delete__people');
   Service.disableRemoteMethodByName('prototype.__delete__posts');
+  Service.disableRemoteMethodByName('prototype.__create__posts');
   Service.disableRemoteMethodByName('prototype.__create__subscriptions');
   Service.disableRemoteMethodByName('prototype.__delete__subscriptions');
   Service.disableRemoteMethodByName('prototype.__updateById__subscriptions');
@@ -153,6 +154,19 @@ module.exports = function(Service) {
       });
     });
   }
+  Service.newPost = function(id, fk, data, cb) {
+    Service.findById(id, function(err, serv) {
+      if (err) return cb(err);
+      const pst = serv.posts.build(data);
+      try {
+        pst.personId = fk;
+        pst.save();
+        cb(null, pst);
+      } catch (err) {
+        cb(err);
+      }
+    });
+  }
 
   // Custom methods: Register
   Service.remoteMethod('userSubscriptions', {
@@ -288,6 +302,21 @@ module.exports = function(Service) {
       path: "/:id/posts/:fkpost/messages/:fkmessage/responses/:fkresponse",
       verb: "get",
       status: 200,
+      errorStatus: 400
+    }
+  });
+  Service.remoteMethod('newPost', {
+    accepts: [
+      {arg: "id", type: "string", root: true, required: true, description: "service id", http: {source: "path"}},
+      {arg: "fk", type: "string", root: true, required: true, description: "Foreign key for author", http: {source: "path"}},
+      {arg: "data", type: "object", http: {source: "body"}}
+    ],
+    returns: {type: "object", root: true},
+    description: "Allows you to create a new post",
+    http: {
+      path: "/:id/posts/author/:fk",
+      verb: "post",
+      status: 201,
       errorStatus: 400
     }
   });
