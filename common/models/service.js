@@ -104,6 +104,55 @@ module.exports = function(Service) {
       });
     });
   }
+  Service.getReplies = function(id, fkpost, fkmessage, cb) {
+    Service.findById(id, function(err, serv) {
+      if (err) return cb(err);
+      serv.posts.findById(fkpost, function(err, post) {
+        if (err) return cb(err);
+        post.messages.findById(fkmessage, function(err, msg) {
+          if (err) return cb(err);
+          msg.responses({}, function(err, rsps) {
+            if (err) return cb(err);
+            cb(null, rsps);
+          });
+        });
+      });
+    });
+  }
+  Service.newReply = function(id, fkpost, fkmessage, fkauthor, data, cb) {
+    Service.findById(id, function(err, serv) {
+      if (err) return cb(err);
+      serv.posts.findById(fkpost, function(err, post) {
+        if (err) return cb(err);
+        post.messages.findById(fkmessage, function(err, msg) {
+          if (err) return cb(err);
+          const rsp = msg.responses.build(data);
+          try {
+            rsp.personId = fkauthor;
+            rsp.save();
+            cb(null, rsp);
+          } catch (err) {
+            cb(err);
+          }
+        });
+      });
+    });
+  }
+  Service.getSingleReply = function(id, fkpost, fkmessage, fkresponse, cb) {
+    Service.findById(id, function(err, serv) {
+      if (err) return cb(err);
+      serv.posts.findById(fkpost, function(err, post) {
+        if (err) return cb(err);
+        post.messages.findById(fkmessage, function(err, msg) {
+          if (err) return cb(err);
+          msg.responses.findById(fkresponse, function(err, rsp) {
+            if (err) return cb(err);
+            cb(null, rsp);
+          });
+        });
+      });
+    });
+  }
 
   // Custom methods: Register
   Service.remoteMethod('userSubscriptions', {
@@ -189,6 +238,54 @@ module.exports = function(Service) {
     description: "Shows a message information",
     http: {
       path: "/:id/posts/:fkpost/messages/:fkmessage",
+      verb: "get",
+      status: 200,
+      errorStatus: 400
+    }
+  });
+  Service.remoteMethod('getReplies', {
+    accepts: [
+      {arg: "id", type: "string", root: true, required: true, description: "service id", http: {source: "path"}},
+      {arg: "fkpost", type: "string", root: true, required: true, description: "Foreign key for post", http: {source: "path"}},
+      {arg: "fkmessage", type: "string", root: true, required: true, description: "Foreign key for message", http: {source: "path"}}
+    ],
+    returns: {type: "object", root: true},
+    description: "List all existing responses for a message",
+    http: {
+      path: "/:id/posts/:fkpost/messages/:fkmessage/responses",
+      verb: "get",
+      status: 200,
+      errorStatus: 400
+    }
+  });
+  Service.remoteMethod('newReply', {
+    accepts: [
+      {arg: "id", type: "string", root: true, required: true, description: "service id", http: {source: "path"}},
+      {arg: "fkpost", type: "string", root: true, required: true, description: "Foreign key for post", http: {source: "path"}},
+      {arg: "fkmessage", type: "string", root: true, required: true, description: "Foreign key for message", http: {source: "path"}},
+      {arg: "fkauthor", type: "string", root: true, required: true, description: "Foreign key for author", http: {source: "path"}},
+      {arg: "data", type: "object", http: {source: "body"}}
+    ],
+    returns: {type: "object", root: true},
+    description: "Allows you to create a new response",
+    http: {
+      path: "/:id/posts/:fkpost/messages/:fkmessage/responses/author/:fkauthor",
+      verb: "post",
+      status: 201,
+      errorStatus: 400
+    }
+  });
+  Service.remoteMethod('getSingleReply', {
+    accepts: [
+      {arg: "id", type: "string", root: true, required: true, description: "service id", http: {source: "path"}},
+      {arg: "fkpost", type: "string", root: true, required: true, description: "Foreign key for post", http: {source: "path"}},
+      {arg: "fkmessage", type: "string", root: true, required: true, description: "Foreign key for message", http: {source: "path"}},
+      {arg: "fkresponse", type: "string", root: true, required: true, description: "Foreign key for response", http: {source: "path"}}
+    ],
+    returns: {type: "object", root: true},
+    description: "Shows a response information",
+    http: {
+      path: "/:id/posts/:fkpost/messages/:fkmessage/responses/:fkresponse",
       verb: "get",
       status: 200,
       errorStatus: 400
