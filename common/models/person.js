@@ -61,6 +61,16 @@ module.exports = function(Person) {
   Person.disableRemoteMethodByName('prototype.__exists__subscribed_posts');
   Person.disableRemoteMethodByName('prototype.__link__subscribed_posts');
   Person.disableRemoteMethodByName('prototype.__unlink__subscribed_posts');
+  Person.disableRemoteMethodByName('prototype.__get__subscribedPosts');
+  Person.disableRemoteMethodByName('prototype.__create__subscribedPosts');
+  Person.disableRemoteMethodByName('prototype.__delete__subscribedPosts');
+  Person.disableRemoteMethodByName('prototype.__findById__subscribedPosts');
+  Person.disableRemoteMethodByName('prototype.__updateById__subscribedPosts');
+  Person.disableRemoteMethodByName('prototype.__destroyById__subscribedPosts');
+  Person.disableRemoteMethodByName('prototype.__count__subscribedPosts');
+  Person.disableRemoteMethodByName('prototype.__exists__subscribedPosts');
+  Person.disableRemoteMethodByName('prototype.__link__subscribedPosts');
+  Person.disableRemoteMethodByName('prototype.__unlink__subscribedPosts');
 
   // role assingment
   Person.observe('after save', function(context, next) {

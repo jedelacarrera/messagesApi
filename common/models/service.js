@@ -17,6 +17,7 @@ module.exports = function(Service) {
   Service.disableRemoteMethodByName('prototype.__delete__subscriptions');
   Service.disableRemoteMethodByName('prototype.__updateById__subscriptions');
 
+
   // Custom methods: Handlers
   Service.userSubscriptions = function(id, fk, cb) {
     Service.findById(id, function(err, serv) {
