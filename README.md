@@ -56,3 +56,22 @@ node .
 - get response for a message: GET /services/{id}/posts/{postId}/messages/{messageId}/responses
 - create a new response: POST /services/{id}/posts/{postId}/messages/{messageId}/responses/author/{responseId}
 - get a single response: GET /services/{id}/posts/{postId}/messages/{messageId}/responses/{responseId}
+
+### Search
+- Search hashtag: GET /services/{id}/posts/filter  
+
+#### Search example
+      {
+        "and": [
+          "#Project",
+          "#Business"
+        ]
+      }
+
+      {
+        "or": [
+          "#NewProduct",
+          "#Trending",
+          "#Sale"
+        ]
+      }

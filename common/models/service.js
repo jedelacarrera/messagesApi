@@ -167,6 +167,52 @@ module.exports = function(Service) {
       }
     });
   }
+  Service.filterPost = function(id, data, cb) {
+    Service.findById(id, function(err, serv) {
+      if (err) return cb(err);
+      const newData = {or: [{or: [{and: []}, {or: []}]}, {or: [{and: []}, {or: []}]}]};
+      if (data.and) {
+        const andDesc = data.and.map((elem) => {
+          return {
+            description: {
+              regexp: `${elem}($| )`
+            }
+          };
+        });
+        const andTitl = data.and.map((elem) => {
+          return {
+            title: {
+              regexp: `${elem}($| )`
+            }
+          };
+        });
+        newData.or[0].or[0].and.push(...andDesc);
+        newData.or[1].or[0].and.push(...andTitl);
+      }
+      if (data.or) {
+        const orDesc = data.or.map((elem) => {
+          return {
+            description: {
+              regexp: `${elem}($| )`
+            }
+          };
+        });
+        const orTitl = data.or.map((elem) => {
+          return {
+            title: {
+              regexp: `${elem}($| )`
+            }
+          };
+        });
+        newData.or[0].or[1].or.push(...orDesc);
+        newData.or[1].or[1].or.push(...orTitl);
+      }
+      serv.posts({where: newData}, function(err, psts) {
+        if (err) return cb(err);
+        cb(null, psts);
+      });
+    });
+  }
 
   // Custom methods: Register
   Service.remoteMethod('userSubscriptions', {
@@ -317,6 +363,20 @@ module.exports = function(Service) {
       path: "/:id/posts/author/:fk",
       verb: "post",
       status: 201,
+      errorStatus: 400
+    }
+  });
+  Service.remoteMethod('filterPost', {
+    accepts: [
+      {arg: "id", type: "string", root: true, required: true, description: "service id", http: {source: "path"}},
+      {arg: "data", type: "object", http: {source: "query"}}
+    ],
+    returns: {type: "object", root: true},
+    description: "Filter the posts",
+    http: {
+      path: "/:id/posts/filter",
+      verb: "get",
+      status: 200,
       errorStatus: 400
     }
   });
