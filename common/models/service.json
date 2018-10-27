@@ -1,48 +1,33 @@
 {
-  "name": "post",
-  "plural": "posts",
+  "name": "service",
+  "plural": "services",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
   },
   "properties": {
-    "title": {
+    "name": {
       "type": "string",
       "required": true
-    },
-    "description": {
-      "type": "string"
     }
   },
   "validations": [],
   "relations": {
-    "person": {
-      "type": "belongsTo",
-      "model": "person",
-      "foreignKey": ""
-    },
-    "messages": {
-      "type": "hasMany",
-      "model": "message",
-      "foreignKey": ""
-    },
     "people": {
       "type": "hasMany",
       "model": "person",
-      "foreignKey": "postId",
-      "through": "subscription"
-    },
-    "service": {
-      "type": "belongsTo",
-      "model": "service",
       "foreignKey": ""
     },
-    "subscribedPeople": {
+    "posts": {
       "type": "hasMany",
-      "model": "person",
-      "foreignKey": "postId",
-      "through": "subscription"
+      "model": "post",
+      "foreignKey": ""
+    },
+    "subscriptions": {
+      "type": "hasMany",
+      "model": "subscription",
+      "foreignKey": ""
     }
   },
   "acls": [
@@ -53,17 +38,29 @@
       "permission": "DENY"
     },
     {
-      "accessType": "READ",
+      "accessType": "*",
       "principalType": "ROLE",
-      "principalId": "$authenticated",
+      "principalId": "A",
       "permission": "ALLOW"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "$authenticated",
-      "permission": "ALLOW",
-      "property": "create"
+      "principalId": "$owner",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "U",
+      "permission": "DENY",
+      "property": "__create__users"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "S",
+      "permission": "ALLOW"
     }
   ],
   "methods": {}

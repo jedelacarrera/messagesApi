@@ -6,7 +6,13 @@
   "options": {
     "validateUpsert": true
   },
-  "properties": {},
+  "properties": {
+    "accountType": {
+      "type": "string",
+      "required": true,
+      "default": "U"
+    }
+  },
   "validations": [],
   "relations": {
     "messages": {
@@ -19,6 +25,12 @@
       "model": "post",
       "foreignKey": ""
     },
+    "subscribedPosts": {
+      "type": "hasMany",
+      "model": "post",
+      "foreignKey": "personId",
+      "through": "subscription"
+    },
     "responses": {
       "type": "hasMany",
       "model": "response",
@@ -28,9 +40,20 @@
       "type": "hasMany",
       "model": "subscription",
       "foreignKey": ""
+    },
+    "service": {
+      "type": "belongsTo",
+      "model": "service",
+      "foreignKey": ""
     }
   },
   "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "A",
+      "permission": "ALLOW"
+    },
     {
       "accessType": "READ",
       "principalType": "ROLE",
