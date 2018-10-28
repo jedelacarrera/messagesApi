@@ -28,6 +28,16 @@
       "type": "hasMany",
       "model": "subscription",
       "foreignKey": ""
+    },
+    "messages": {
+      "type": "hasMany",
+      "model": "message",
+      "foreignKey": ""
+    },
+    "responses": {
+      "type": "hasMany",
+      "model": "response",
+      "foreignKey": ""
     }
   },
   "acls": [
@@ -38,9 +48,9 @@
       "permission": "DENY"
     },
     {
-      "accessType": "*",
+      "accessType": "READ",
       "principalType": "ROLE",
-      "principalId": "A",
+      "principalId": "USER",
       "permission": "ALLOW"
     },
     {
@@ -52,15 +62,44 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "U",
-      "permission": "DENY",
-      "property": "__create__users"
+      "principalId": "USER",
+      "permission": "ALLOW",
+      "property": "__create__post"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "USER",
+      "permission": "ALLOW",
+      "property": "__create__message"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "USER",
+      "permission": "ALLOW",
+      "property": "__create__response"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "USER",
+      "permission": "ALLOW",
+      "property": "__create__subscription"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "USER",
+      "permission": "ALLOW",
+      "property": "____destroyById__subscription"
     },
     {
       "accessType": "*",
       "principalType": "ROLE",
-      "principalId": "S",
-      "permission": "ALLOW"
+      "principalId": "SERVICE",
+      "permission": "ALLOW",
+      "property": "__create__person"
     }
   ],
   "methods": {}

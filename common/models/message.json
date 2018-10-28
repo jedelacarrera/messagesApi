@@ -28,6 +28,11 @@
       "type": "hasMany",
       "model": "response",
       "foreignKey": ""
+    },
+    "service": {
+      "type": "belongsTo",
+      "model": "service",
+      "foreignKey": ""
     }
   },
   "acls": [
