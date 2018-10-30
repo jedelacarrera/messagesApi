@@ -38,11 +38,11 @@
   },
   "post": {
     "dataSource": "postgres",
-    "public": false
+    "public": true
   },
   "message": {
     "dataSource": "postgres",
-    "public": false
+    "public": true
   },
   "response": {
     "dataSource": "postgres",

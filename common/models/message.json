@@ -40,15 +40,22 @@
     {
       "accessType": "READ",
       "principalType": "ROLE",
-      "principalId": "$authenticated",
+      "principalId": "USER",
       "permission": "ALLOW"
     },
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "$authenticated",
+      "principalId": "USER",
       "permission": "ALLOW",
-      "property": "create"
+      "property": "__create__responses"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "USER",
+      "permission": "ALLOW",
+      "property": "__get__responses"
     }
   ],
   "methods": {}

@@ -10,7 +10,7 @@
     "accountType": {
       "type": "string",
       "required": true,
-      "default": "U"
+      "default": "USER"
     }
   },
   "validations": [],
@@ -49,52 +49,11 @@
   },
   "acls": [
     {
-      "accessType": "*",
-      "principalType": "ROLE",
-      "principalId": "A",
-      "permission": "ALLOW"
-    },
-    {
-      "accessType": "READ",
-      "principalType": "ROLE",
-      "principalId": "$owner",
-      "permission": "ALLOW",
-      "property": "__get__posts"
-    },
-    {
       "accessType": "WRITE",
       "principalType": "ROLE",
-      "principalId": "$owner",
-      "permission": "ALLOW",
-      "property": "__create__posts"
-    },
-    {
-      "accessType": "READ",
-      "principalType": "ROLE",
-      "principalId": "$owner",
-      "permission": "ALLOW",
-      "property": "__get__messages"
-    },
-    {
-      "accessType": "WRITE",
-      "principalType": "ROLE",
-      "principalId": "$owner",
-      "permission": "ALLOW",
-      "property": "__create__messages"
-    },
-    {
-      "accessType": "READ",
-      "principalType": "ROLE",
-      "principalId": "$owner",
-      "permission": "ALLOW",
-      "property": "__get__responses"
-    },
-    {
-      "accessType": "WRITE",
-      "principalType": "ROLE",
-      "principalId": "$owner",
-      "permission": "ALLOW",
-      "property": "__create__responses"
+      "principalId": "$everyone",
+      "permission": "DENY",
+      "property": "create"
     },
     {
       "accessType": "READ",

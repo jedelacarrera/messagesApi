@@ -23,11 +23,6 @@
       "type": "hasMany",
       "model": "post",
       "foreignKey": ""
-    },
-    "subscriptions": {
-      "type": "hasMany",
-      "model": "subscription",
-      "foreignKey": ""
     }
   },
   "acls": [
@@ -38,9 +33,9 @@
       "permission": "DENY"
     },
     {
-      "accessType": "*",
+      "accessType": "READ",
       "principalType": "ROLE",
-      "principalId": "A",
+      "principalId": "USER",
       "permission": "ALLOW"
     },
     {
@@ -52,15 +47,30 @@
     {
       "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "U",
-      "permission": "DENY",
-      "property": "__create__users"
+      "principalId": "USER",
+      "permission": "ALLOW",
+      "property": "__create__posts"
     },
     {
-      "accessType": "*",
+      "accessType": "EXECUTE",
       "principalType": "ROLE",
-      "principalId": "S",
-      "permission": "ALLOW"
+      "principalId": "SERVICE",
+      "permission": "ALLOW",
+      "property": "__create__people"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "ADMIN",
+      "permission": "ALLOW",
+      "property": "__create__people"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "ADMIN",
+      "permission": "ALLOW",
+      "property": "create"
     }
   ],
   "methods": {}
