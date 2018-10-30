@@ -10,7 +10,7 @@
     "accountType": {
       "type": "string",
       "required": true,
-      "default": "U"
+      "default": "USER"
     }
   },
   "validations": [],

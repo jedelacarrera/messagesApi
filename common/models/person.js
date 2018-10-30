@@ -2,11 +2,20 @@
 var app = require('../../server/server.js');
 
 module.exports = function(Person) {
-  Person.validatesInclusionOf('accountType', {'in': ['SERVICE', 'USER', 'ADMIN']});
+  Person.validatesInclusionOf(
+    'accountType',
+    {'in': ['SERVICE', 'USER', 'ADMIN']}
+  );
 
   Person.observe('before save', function(context, next) {
     if (!context.options.accessToken) {
       return next();
+    }
+
+    if (!context.instance) {
+      var err = new Error('Unauthorized');
+      err.statusCode = 401;
+      next(err);
     }
 
     console.log(context.options);
