@@ -32,46 +32,25 @@ node .
 - login: POST /api/people/login
 - logout: POST /api/people/logout
 - change-password: POST /api/people/change-password
+- subscriptions: GET /api/people/{id}/subscriptions
+- create subscription: POST /api/people/{id}/subscriptions
+- delete subscription: DELETE /api/people/{id}/subscriptions/{subsId}
 
 ### Service
-- get users: GET /services/{id}/people
-- create a new user: POST /services/{id}/people
-- get single user: GET /services/{id}/people/{userId}
-- update user: PUT /services/{id}/people/{userId}
-- delete user: DELETE /services/{id}/people/{userId}
-- get posts subscribed by user: GET /services/{id}/people/{userId}/subscriptions
-- subscribe an user for a post: POST /services/{id}/people/{userId}/subscriptions/posts/{postId}
+- get users: GET /api/services/{id}/people
+- create a new user: POST /api/services/{id}/people
 
-- get posts: GET /services/{id}/posts
-- create a new post: POST /services/{id}/posts/author/{authorId}
-- get a single post: GET /services/{id}/posts/{postId}
-- update post: PUT /services/{id}/posts/{postId}
-- delete post: DELETE /services/{id}/posts/{postId}
-- get users subscribed to post: GET /services/{id}/posts/{postId}/subscriptions
+- get posts: GET /api/services/{id}/posts
+- create a new post: POST /api/services/{id}/posts/
+- get a single post: GET /api/posts/{postId}
 
-- get messages from a post: GET /services/{id}/posts/{postId}/messages
-- create a new message: POST /services/{id}/posts/{postId}/messages/author/{messageId}
-- get a single message: GET /services/{id}/posts/{postId}/messages/{messageId}
+- get messages from a post: GET /api/posts/{postId}/messages
+- create a new message: POST /api/posts/{postId}/messages
+- get a single message: GET /api/messages/{messageId}
 
-- get response for a message: GET /services/{id}/posts/{postId}/messages/{messageId}/responses
-- create a new response: POST /services/{id}/posts/{postId}/messages/{messageId}/responses/author/{responseId}
-- get a single response: GET /services/{id}/posts/{postId}/messages/{messageId}/responses/{responseId}
+- get response for a message: GET /api/messages/{messageId}/responses
+- create a new response: POST /api/messages/{messageId}/responses
 
 ### Search
-- Search hashtag: GET /services/{id}/posts/filter  
-
-#### Search example
-      {
-        "and": [
-          "#Project",
-          "#Business"
-        ]
-      }
-
-      {
-        "or": [
-          "#NewProduct",
-          "#Trending",
-          "#Sale"
-        ]
-      }
+- Search hashtag: GET /api/services/{id}/filterPosts/filterString
+- Search hashtag: GET /api/services/{id}/filterMessages/filterString

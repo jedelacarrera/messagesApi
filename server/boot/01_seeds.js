@@ -48,6 +48,16 @@ module.exports = async function(app) {
       },
     );
 
+    var person_admin = await personModel.create(
+      {
+        'email': 'admin@admin.cl',
+        'username': 'admin',
+        'password': '1234',
+        'emailVerified': true,
+        'accountType': 'ADMIN',
+      }
+    );
+
     var person_service = await personModel.create(
       {
         'email': 'a@a.cl',
@@ -148,23 +158,23 @@ module.exports = async function(app) {
 
     var responses = await responseModel.create([
      {
-       "description": "first message",
+       "description": "first response",
        "messageId": messages[0].id,
        "personId": people_user[0].id,
        "serviceId": service.id
      },
      {
-       "description": "second message",
+       "description": "second response",
        "messageId": messages[1].id,
        "personId": people_user[1].id,
      },
      {
-       "description": "third message",
+       "description": "third response",
        "messageId": messages[1].id,
        "personId": people_user[1].id,
      },
      {
-       "description": "fourth message",
+       "description": "fourth response",
        "messageId": messages[2].id,
        "personId": people_user[0].id,
      },
@@ -200,12 +210,17 @@ module.exports = async function(app) {
   }
 
   async function createRoles(err) {
-      var roles = await roleModel.create([{
-        name: 'SERVICE',
-      },
-      {
-        name: 'USER',
-      }]);
+      var roles = await roleModel.create([
+        {
+          name: 'SERVICE',
+        },
+        {
+          name: 'USER',
+        },
+        {
+          name: 'ADMIN',
+        }
+      ]);
       console.log('Roles created');
       return roles;
     }

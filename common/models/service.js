@@ -1,30 +1,32 @@
 'use strict';
 
 module.exports = function(Service) {
-  Service.filterByString = function(id, filterString, cb) {
+  Service.filterMessagesByString = function(id, filterString, cb) {
     Service.app.models.Message.find(
-      {where: {description: {like: `%${filterString}%`}, serviceId: id}},
+      {where: {description: {like: `%${filterString}%`}}},
       function(err, data) {
-        return cb(err, data);
-      });
-  };
-
-  Service.filterByString = function(id, filterString, cb) {
-    Service.app.models.Post.find(
-      {where: {description: {like: `%${filterString}%`}, serviceId: id}},
-      function(err, data) {
-        return cb(err, data);
-      });
+        if (err) cb(err);
+        return cb(err, data.filter(async function(message) {
+          return await Service.app.models.Post.findOne(
+            {where: {id: message.postId}},
+            function(err, post) {
+              if (err) return false;
+              return post.serviceId !== id;
+            }
+          );
+        }));
+      }
+    );
   };
 
   Service.remoteMethod(
-    'filterByString',
+    'filterMessagesByString',
     {
       accepts: [
-      	{arg: 'id', type: 'string', required: true},
-      	{arg: 'filterString', type: 'string', required: true},
+        {arg: 'id', type: 'number', required: true},
+        {arg: 'filterString', type: 'string', required: true},
       ],
-      http: {path: '/:id/messages/filter/:filterString', verb: 'get'},
+      http: {path: '/:id/filterMessages/:filterString', verb: 'get'},
       returns: {arg: 'data', type: 'string', root: true},
       description: [
         'Find messages which include a string',
@@ -33,18 +35,35 @@ module.exports = function(Service) {
     }
   );
 
+  Service.filterPostsByString = function(id, filterString, cb) {
+    Service.app.models.Post.find(
+      {
+        where:
+        {
+          or: [
+            {description: {like: `%${filterString}%`}},
+            {title: {like: `%${filterString}%`}},
+          ],
+        },
+      },
+      function(err, data) {
+        return cb(err, data);
+      }
+    );
+  };
+
   Service.remoteMethod(
-    'filterByString',
+    'filterPostsByString',
     {
       accepts: [
-      	{arg: 'id', type: 'string', required: true},
-      	{arg: 'filterString', type: 'string', required: true},
+        {arg: 'id', type: 'string', required: true},
+        {arg: 'filterString', type: 'string', required: true},
       ],
-      http: {path: '/:id/posts/filter/:filterString', verb: 'get'},
+      http: {path: '/:id/filterPosts/:filterString', verb: 'get'},
       returns: {arg: 'data', type: 'string', root: true},
       description: [
-        'Find messages which include a string',
-        'Useful to filter messages with a hastag',
+        'Find posts which include a string in the title or description',
+        'Useful to filter posts with a hastag or label',
       ],
     }
   );

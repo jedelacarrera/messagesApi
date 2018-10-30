@@ -55,8 +55,22 @@
     {
       "accessType": "READ",
       "principalType": "ROLE",
-      "principalId": "$authenticated",
+      "principalId": "USER",
       "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "USER",
+      "permission": "ALLOW",
+      "property": "__create__messages"
+    },
+    {
+      "accessType": "READ",
+      "principalType": "ROLE",
+      "principalId": "USER",
+      "permission": "ALLOW",
+      "property": "__get__messages"
     }
   ],
   "methods": {}
