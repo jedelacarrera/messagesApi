@@ -28,7 +28,6 @@ node .
 ## Models
 
 ### Person (extends loopback's user model)
-- register: POST /api/people
 - login: POST /api/people/login
 - logout: POST /api/people/logout
 - change-password: POST /api/people/change-password
