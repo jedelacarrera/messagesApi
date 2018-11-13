@@ -485,3 +485,50 @@ def test_create_service(admin_user, service_user):
     )
 
     assert data.status_code == 401
+
+
+def test_reset_notifications(user_user):
+    user_data = get_user_info(user_user['email'], user_user['password'])
+
+    data = requests.get(
+        f"{BASE_URL}/services/{user_data['service_id']}/posts",
+        params={'access_token': user_data['access_token']}
+    )
+
+    post_id = data.json()[0]['id']
+
+    subscription_data = requests.post(
+        f"{BASE_URL}/people/{user_data['id']}/subscriptions",
+        params={'access_token': user_data['access_token']},
+        data={'postId': post_id, 'notification': True}
+        )
+
+    data = requests.get(
+        f"{BASE_URL}/people/{user_data['id']}/subscriptions",
+        params={'access_token': user_data['access_token']},
+        )
+
+    print(data.json())
+    intitial_length = len(data.json())
+
+    assert 0 < intitial_length
+    assert data.json()[-1]['postId'] == post_id
+    assert data.json()[-1]['notification'] == True
+
+    subscription_data = requests.post(
+        f"{BASE_URL}/people/{user_data['id']}/resetNotifications",
+        params={'access_token': user_data['access_token']}
+        )
+
+    assert subscription_data.status_code == 204
+
+    data = requests.get(
+        f"{BASE_URL}/people/{user_data['id']}/subscriptions",
+        params={'access_token': user_data['access_token']},
+        )
+
+    print(data.json())
+
+    assert intitial_length == len(data.json())
+    assert data.json()[-1]['postId'] == post_id
+    assert data.json()[-1]['notification'] == False

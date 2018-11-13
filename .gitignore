@@ -18,3 +18,8 @@
 coverage
 node_modules
 npm-debug.log
+
+*.pyc
+testsPython/__pycache__/*
+testsPython/.pytest_cache
+testsPython/.pytest_cache/*
