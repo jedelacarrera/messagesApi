@@ -2,6 +2,39 @@
 var app = require('../../server/server.js');
 
 module.exports = function(Person) {
+  Person.resetNotifications = function(id, cb) {
+    Person.app.models.Subscription.updateAll(
+      {
+        where:
+        {
+          personId: id,
+          notification: true,
+        },
+      },
+      {
+        notification: false,
+      },
+      function(err) {
+        if (err) cb(err);
+
+        cb(null);
+      }
+    );
+  };
+
+  Person.remoteMethod(
+    'resetNotifications',
+    {
+      accepts: [
+        {arg: 'id', type: 'string', required: true},
+      ],
+      http: {path: '/:id/resetNotifications', verb: 'post', 'status': 204},
+      description: [
+        'Reset all notifications of subscriptions',
+      ],
+    }
+  );
+
   Person.validatesInclusionOf(
     'accountType',
     {'in': ['SERVICE', 'USER', 'ADMIN']}
