@@ -485,3 +485,42 @@ def test_create_service(admin_user, service_user):
     )
 
     assert data.status_code == 401
+
+def test_update_notification_on_new_message(user_user):
+    user_data = get_user_info(user_user['email'], user_user['password'])
+
+    # Create post
+    data = requests.post(
+        f"{BASE_URL}/services/{user_data['service_id']}/posts",
+        params={'access_token': user_data['access_token']},
+        data={'title': 'post test notification', 'description': 'test'}
+    )
+
+    post_id = data.json()['id']
+
+    # Create subscription to the post
+    subscription_data = requests.post(
+        f"{BASE_URL}/people/{user_data['id']}/subscriptions",
+        params={'access_token': user_data['access_token']},
+        data={'postId': post_id}
+        )
+
+    assert subscription_data.json()['postId'] == post_id
+    assert subscription_data.json()['notification'] == False
+
+    # Create message to the post
+    data = requests.post(
+        f"{BASE_URL}/posts/{post_id}/messages",
+        params={'access_token': user_data['access_token']},
+        data={'description': 'test message notification'}
+    )
+
+    assert data.json()['postId'] == post_id
+
+    subscription_data = requests.get(
+        f"{BASE_URL}/people/{user_data['id']}/subscriptions",
+        params={'access_token': user_data['access_token']},
+        )
+
+    assert subscription_data.json()[-1]['postId'] == post_id
+    assert subscription_data.json()[-1]['notification'] == True
